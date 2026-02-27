@@ -38,9 +38,9 @@ jobs:
       fail-fast: true
       matrix:
         include:
-          #- container: ghcr.io/4paradigm/hybridsql-base:latest
-          #  flags: ""
-          #  distro: centos
+          - container: ghcr.io/4paradigm/hybridsql-base:latest
+            flags: ""
+            distro: centos
           - container: ubuntu:20.04
             flags: -DBUILD_ZOOKEEPER_PATCH=ON
             distro: ubuntu
