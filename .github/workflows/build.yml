@@ -55,10 +55,53 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: setup deps
-        if: startsWith(matrix.container, 'ubuntu')
         run: |
-          apt update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y bison python3-dev libcppunit-dev build-essential cmake autoconf tcl pkg-config git curl patch libtool-bin
+          if [[ "${{ matrix.container }}" =~ ^ubuntu ]]; then
+            echo "Setting up Ubuntu environment..."
+            apt update
+            DEBIAN_FRONTEND=noninteractive apt-get install -y \
+              bison \
+              python3-dev \
+              libcppunit-dev \
+              build-essential \
+              cmake \
+              autoconf \
+              tcl \
+              pkg-config \
+              git \
+              curl \
+              patch \
+              libtool-bin \
+              wget
+          else
+            echo "Setting up RockyLinux/CentOS environment..."
+            yum install -y epel-release yum-utils
+            yum config-manager --set-enabled powertools || true
+            yum groupinstall -y "Development Tools"
+            yum install -y \
+              cmake \
+              git \
+              curl \
+              wget \
+              python3 \
+              python3-devel \
+              openssl-devel \
+              libtool \
+              autoconf \
+              automake \
+              tcl \
+              pkgconfig \
+              patch \
+              bison \
+              which \
+              file \
+              procps-ng
+          fi
+
+          echo "=== Installation verification ==="
+          cmake --version
+          gcc --version
+          python3 --version
 
       - name: download thirdparty source
         uses: actions/checkout@v3
