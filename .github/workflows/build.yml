@@ -56,7 +56,7 @@ jobs:
 
       - name: setup deps
         run: |
-          if [[ "${{ matrix.container }}" =~ ^ubuntu ]]; then
+          if echo "${{ matrix.container }}" | grep -q "^ubuntu"; then
             echo "Setting up Ubuntu environment..."
             apt update
             DEBIAN_FRONTEND=noninteractive apt-get install -y \
