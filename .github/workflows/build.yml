@@ -52,9 +52,11 @@ jobs:
       DISTRO: ${{ matrix.distro }}
       ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
     steps:
-      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: '16'
+      - uses: actions/checkout@v3
 
       - name: setup deps
         if: startsWith(matrix.container, 'ubuntu')
