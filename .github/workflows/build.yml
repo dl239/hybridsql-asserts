@@ -53,6 +53,8 @@ jobs:
       ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
     steps:
       - uses: actions/checkout@v3
+        with:
+          node-version: '16'
 
       - name: setup deps
         if: startsWith(matrix.container, 'ubuntu')
